@@ -2,15 +2,17 @@
 import React from "react";
 import { css } from "@emotion/react";
 
-const StockList = () => {
+const Header = () => {
   const styles = css({
     "font-size": "30px",
+    width: "100vw",
+    height: "30vh",
 
     "&:hover": {
       color: "red",
     },
   });
-  return <div css={styles}>StockList</div>;
+  return <div css={styles}>Header</div>;
 };
 
-export default StockList;
+export default Header;
