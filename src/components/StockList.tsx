@@ -16,7 +16,7 @@ const StockList = () => {
       border: "1px double black",
     },
     "tr td": {
-      border: "1px solid black",
+      border: "inherit",
     },
   });
   return (
