@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { css } from "@emotion/react";
+import { Link } from "react-router-dom";
 import ComparisonStock from "../components/ComparisonStock";
 
 // useStateで管理へ変更
@@ -27,6 +28,9 @@ const ComparisonPage = () => {
   return (
     <div>
       銘柄比較
+      <div>
+        <Link to="/">トップへ</Link>
+      </div>
       <table css={styles}>
         {comparisonStocks.stocks.map((stock) => (
           <ComparisonStock name={stock.name} code={stock.code} />
