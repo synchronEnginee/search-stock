@@ -23,6 +23,9 @@ const ComparisonPage = () => {
     margin: "0 auto",
     "font-size": "30px",
     border: "1px solid black",
+    "tr:nth-child(odd)": {
+      "background-color": "rgb(255, 255, 128)",
+    },
     "tr th": {
       "font-weight": "bold",
       background: "#fff5e5",
