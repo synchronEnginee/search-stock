@@ -2,10 +2,14 @@
 import React from "react";
 import { css } from "@emotion/react";
 import { Link } from "react-router-dom";
-import ComparisonStock from "../components/ComparisonStock";
+import {
+  ComparisonStock,
+  ComparisonStockProps,
+} from "../components/ComparisonStock";
 
 // useStateで管理へ変更
-const comparisonStocks = {
+// バックエンドAPI叩いて取得
+const comparisonStocks: { stocks: Array<ComparisonStockProps> } = {
   stocks: [
     { name: "任天堂", code: "7974" },
     { name: "キーエンス", code: "6861" },
@@ -32,6 +36,10 @@ const ComparisonPage = () => {
         <Link to="/">トップへ</Link>
       </div>
       <table css={styles}>
+        <tr>
+          <th>銘柄名</th>
+          <th>銘柄コード</th>
+        </tr>
         {comparisonStocks.stocks.map((stock) => (
           <ComparisonStock name={stock.name} code={stock.code} />
         ))}
