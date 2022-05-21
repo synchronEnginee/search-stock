@@ -34,5 +34,6 @@ module.exports = {
         unnamedComponents: "arrow-function",
       },
     ],
+    "import/no-unresolved": "off",
   },
 };
