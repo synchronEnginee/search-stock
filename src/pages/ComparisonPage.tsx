@@ -1,13 +1,8 @@
 /** @jsxImportSource @emotion/react */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { css } from "@emotion/react";
 import { Link } from "react-router-dom";
-import axios, {
-  AxiosResponse,
-  AxiosRequestConfig,
-  AxiosPromise,
-  AxiosError,
-} from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import {
   ComparisonStock,
   ComparisonStockProps,
@@ -17,8 +12,8 @@ import {
 // バックエンドAPI叩いて取得
 const comparisonStocks: { stocks: Array<ComparisonStockProps> } = {
   stocks: [
-    { name: "任天堂", code: "7974" },
-    { name: "キーエンス", code: "6861" },
+    { name: "任天堂", code: "7974", price: "58000", per: "20" },
+    { name: "キーエンス", code: "6861", price: "49000", per: "30" },
   ],
 };
 
@@ -42,44 +37,33 @@ const stockUrl = "https://127.0.0.1:5000/stock";
 
 // 項目に欠けがあった場合でもエラーが出るよう外部で定義
 interface StockGetResponse {
-  name: string;
-  code: string;
-  price: string;
-  per: string;
+  status: number;
+  data: Array<ComparisonStockProps>;
 }
 
 interface IErrorResponse {
   error: string;
 }
 
-// any入っちゃったので要改善
-type FetchStock = () => AxiosPromise<StockGetResponse> | Promise<Error>;
-
 // サーバからの応答の形式を渡す
 // TODO: useEffect内、ファイルを切り出す
-const getStock = () => {
-  const getStockCompare: FetchStock = async () => {
-    await axios
-      .get("https://127.0.0.1:5000/stock")
-      .then((res: AxiosResponse<StockGetResponse>) => {
-        // res.data.tokenはstring
-        console.log(`token: ${res.data.code}`);
-        return res;
-      })
-      // エラー応答の構造を明示する
-      .catch((e: AxiosError<IErrorResponse>) => {
-        if (e.response !== undefined) {
-          // e.response.data.errorはstring
-          console.log(e.response.data.error);
-          return new Error(e.response.data.error);
-        }
-      });
-  };
-  return getStockCompare;
-};
-
 const ComparisonPage = () => {
-  useEffect(() => {});
+  const [stocks, setStocks] = useState<Array<ComparisonStockProps>>();
+  useEffect(() => {
+    const getStock = async () => {
+      try {
+        const res = await axios.get<StockGetResponse>(stockUrl);
+        if (res.status !== 200 || !("data" in res)) {
+          throw new AxiosError("statusが200じゃない");
+        }
+        setStocks(res.data.data);
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          console.log(error.message);
+        }
+      }
+    };
+  }, []);
   return (
     <div>
       銘柄比較
