@@ -1,25 +1,25 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
-import { css } from "@emotion/react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { css } from '@emotion/react';
+import { Link } from 'react-router-dom';
 
 // pageコンポーネントを作成する
 
 const StockList = () => {
   const styles = css({
-    width: "60vw",
-    height: "100%",
-    margin: "0 auto",
-    "font-size": "30px",
-    border: "1px solid black",
+    width: '60vw',
+    height: '100%',
+    margin: '0 auto',
+    fontSize: '30px',
+    border: '1px solid black',
 
-    "tr th": {
-      "font-weight": "bold",
-      background: "#fff5e5",
-      border: "1px double black",
+    'tr th': {
+      fontWeight: 'bold',
+      background: '#fff5e5',
+      border: '1px double black',
     },
-    "tr td": {
-      border: "inherit",
+    'tr td': {
+      border: 'inherit',
     },
   });
   return (

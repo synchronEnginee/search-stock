@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
-import { css } from "@emotion/react";
+import React from 'react';
+import { css } from '@emotion/react';
 
 export interface ComparisonStockProps {
   name: string;
@@ -13,13 +13,15 @@ export const ComparisonStock: React.FC<ComparisonStockProps> = (props) => {
   const { name, code, price, per } = props;
   const styles = css({
     td: {
-      border: "inherit",
+      border: 'inherit',
     },
   });
   return (
     <tr css={styles}>
       <td>{name}</td>
       <td>{code}</td>
+      <td>{price}</td>
+      <td>{per}</td>
     </tr>
   );
 };

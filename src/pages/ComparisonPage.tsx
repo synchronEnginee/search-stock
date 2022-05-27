@@ -10,30 +10,30 @@ import {
 
 // useStateで管理へ変更
 // バックエンドAPI叩いて取得
-const comparisonStocks: { stocks: Array<ComparisonStockProps> } = {
-  stocks: [
-    { name: '任天堂', code: '7974', price: '58000', per: '20' },
-    { name: 'キーエンス', code: '6861', price: '49000', per: '30' },
-  ],
-};
+// const comparisonStocks: { stocks: Array<ComparisonStockProps> } = {
+//   stocks: [
+//     { name: '任天堂', code: '7974', price: '58000', per: '20' },
+//     { name: 'キーエンス', code: '6861', price: '49000', per: '30' },
+//   ],
+// };
 
 const styles = css({
   width: '60vw',
   height: '100%',
   margin: '0 auto',
-  'font-size': '30px',
+  fontSize: '30px',
   border: '1px solid black',
   'tr:nth-child(odd)': {
     'background-color': 'rgb(255, 255, 128)',
   },
   'tr th': {
-    'font-weight': 'bold',
+    fontWeight: 'bold',
     background: '#fff5e5',
     border: '1px double black',
   },
 });
 
-const stockUrl = 'https://127.0.0.1:5000/stock';
+const stockUrl = 'http://127.0.0.1:5000/stock';
 
 // 項目に欠けがあった場合でもエラーが出るよう外部で定義
 interface StockGetResponse extends AxiosResponse {
@@ -78,8 +78,10 @@ const ComparisonPage = () => {
         <tr>
           <th>銘柄名</th>
           <th>銘柄コード</th>
+          <th>株価</th>
+          <th>PER</th>
         </tr>
-        {comparisonStocks.stocks.map((stock) => (
+        {stocks.map((stock) => (
           <ComparisonStock
             name={stock.name}
             code={stock.code}
