@@ -45,7 +45,7 @@ interface IErrorResponse {
 }
 
 // サーバからの応答の形式を渡す
-// TODO: useEffect内、ファイルを切り出す
+// TODO: useSWRへ変更し、ページネーション実装
 const ComparisonPage = () => {
   const [stocks, setStocks] = useState<ComparisonStockProps[]>([]);
   useEffect(() => {

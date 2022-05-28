@@ -1,12 +1,14 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import StockList from "./components/StockList";
-import Header from "./templates/Header";
-import ComparisonPage from "./pages/ComparisonPage";
-import Footer from "./templates/Footer";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import StockList from './components/StockList';
+import Header from './templates/Header';
+import ComparisonPage from './pages/ComparisonPage';
+import Footer from './templates/Footer';
+import Sidebar from './templates/Sidebar';
 
 const App = () => (
   <>
+    <Sidebar />
     <Header />
     <Router>
       <Routes>
