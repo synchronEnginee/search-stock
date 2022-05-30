@@ -1,20 +1,20 @@
 /** @jsxImportSource @emotion/react */
-import React from "react";
-import { css } from "@emotion/react";
+import React from 'react';
+import { css } from '@emotion/react';
 
 const Footer = () => {
   const styles = css({
     dl: {
-      display: "flex",
-      "flex-direction": "row",
-      "justify-content": "center",
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
       dt: {
-        width: "10%",
-        "border-bottom": "2px solid #0277b4",
+        width: '10%',
+        borderBottom: '2px solid #0277b4',
       },
       dd: {
-        width: "20%",
-        "border-bottom": "1px solid #6f6f6f",
+        width: '20%',
+        borderBottom: '1px solid #6f6f6f',
       },
     },
   });

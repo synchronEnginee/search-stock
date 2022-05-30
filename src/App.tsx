@@ -8,9 +8,9 @@ import Sidebar from './templates/Sidebar';
 
 const App = () => (
   <>
-    <Sidebar />
-    <Header />
     <Router>
+      <Sidebar />
+      <Header />
       <Routes>
         <Route path="/" element={<StockList />} />
         <Route path="/compare" element={<ComparisonPage />} />

@@ -5,11 +5,11 @@ import header_picture from 'assets/header_picture.jpg';
 
 const Header = () => {
   const styles = css({
-    'font-size': '30px',
+    fontSize: '30px',
     textAlign: 'center',
     width: '100vw',
     height: '30vh',
-    'background-image': `url(${header_picture})`,
+    backgroundImage: `url(${header_picture})`,
 
     '&:hover': {
       color: 'red',
