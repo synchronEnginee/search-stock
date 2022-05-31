@@ -15,14 +15,13 @@ const Sidebar = () => {
       {/* <button type="button" onClick={toggleOpen}>
         サイドバー
       </button> */}
-      {/* サイドバーがz-indexで前に来ているので、widthで全体のレイアウトを調整する必要がありそう */}
       <Drawer
         variant="permanent"
         anchor="left"
         open={open}
         onClose={toggleOpen}
         sx={{
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '10%' },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '20vw' },
         }}
       >
         <List>

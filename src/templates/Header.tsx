@@ -7,7 +7,7 @@ const Header = () => {
   const styles = css({
     fontSize: '30px',
     textAlign: 'center',
-    width: '100vw',
+    width: '80vw',
     height: '30vh',
     backgroundImage: `url(${header_picture})`,
 

@@ -18,7 +18,7 @@ import {
 // };
 
 const styles = css({
-  width: '60vw',
+  width: '60%',
   height: '100%',
   margin: '0 auto',
   fontSize: '30px',
