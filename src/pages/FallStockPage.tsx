@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
+import React, { useState } from 'react';
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import FallStock, { FallStockProps } from 'components/FallStock';
@@ -30,13 +30,12 @@ interface FallStockGetResponse extends AxiosResponse {
   data: FallStockProps[];
 }
 
-const fallStockUrl = 'http://127.0.0.1:5000';
-
 const fetcher = (url: string) =>
   axios.get<FallStockProps, FallStockGetResponse>(url).then((res) => res.data);
 
 const FallListPage = () => {
-  const { data } = useSWR(fallStockUrl, fetcher);
+  const [pageIndex, setPageIndex] = useState(1);
+  const { data } = useSWR(`http://127.0.0.1:5000/${pageIndex}`, fetcher);
   const styles = css({
     width: '60vw',
     height: '100%',
@@ -72,6 +71,14 @@ const FallListPage = () => {
             />
           ))}
       </table>
+      {!!(pageIndex - 1) && (
+        <button type="button" onClick={() => setPageIndex(pageIndex - 1)}>
+          Previous
+        </button>
+      )}
+      <button type="button" onClick={() => setPageIndex(pageIndex + 1)}>
+        Next
+      </button>
     </>
   );
 };
