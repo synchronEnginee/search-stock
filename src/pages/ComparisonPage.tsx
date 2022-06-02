@@ -8,15 +8,6 @@ import {
   ComparisonStockProps,
 } from '../components/ComparisonStock';
 
-// useStateで管理へ変更
-// バックエンドAPI叩いて取得
-// const comparisonStocks: { stocks: Array<ComparisonStockProps> } = {
-//   stocks: [
-//     { name: '任天堂', code: '7974', price: '58000', per: '20' },
-//     { name: 'キーエンス', code: '6861', price: '49000', per: '30' },
-//   ],
-// };
-
 const styles = css({
   width: '60%',
   height: '100%',

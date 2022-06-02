@@ -6,26 +6,6 @@ import FallStock, { FallStockProps } from 'components/FallStock';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import useSWR from 'swr';
 
-// バックエンドから取得する(useSWRを使用する)
-// const fallStocks: { stocks: Array<FallStockProps> } = {
-//   stocks: [
-//     {
-//       name: '任天堂',
-//       code: '7974',
-//       price: '58000',
-//       stockFall: '20%',
-//       stockTargetPrice: '80000',
-//     },
-//     {
-//       name: 'キーエンス',
-//       code: '6861',
-//       price: '49000',
-//       stockFall: '30%',
-//       stockTargetPrice: '60000',
-//     },
-//   ],
-// };
-
 interface FallStockGetResponse extends AxiosResponse {
   data: FallStockProps[];
 }
