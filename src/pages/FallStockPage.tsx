@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import FallStock, { FallStockProps } from 'components/FallStock';
+import DownloadExcelButton from 'components/DownloadExcelButton';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import useSWR from 'swr';
 
@@ -59,6 +60,7 @@ const FallListPage = () => {
       <button type="button" onClick={() => setPageIndex(pageIndex + 1)}>
         Next
       </button>
+      {data && <DownloadExcelButton data={data} />}
     </>
   );
 };
