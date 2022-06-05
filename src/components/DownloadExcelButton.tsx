@@ -5,6 +5,7 @@ type DownloadExcelProps = {
   data: Array<object>;
 };
 
+// エクセルファイルのバイナリを作成し、aリンクを作成→実行
 const downloadExcel = async (stockTable: Array<object>) => {
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('sheet1', {});
@@ -26,13 +27,14 @@ const downloadExcel = async (stockTable: Array<object>) => {
   link.href = window.URL.createObjectURL(blob);
   link.download = '株比較.xlsx';
   link.click();
+  link.remove();
 };
 
 const DownloadExcelButton: React.FC<DownloadExcelProps> = ({ data }) => {
-  const downloadExcelButtonClick = () => downloadExcel(data);
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+  const downloadExcelButtonClick: () => void = () => downloadExcel(data);
 
   return (
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     <button type="button" onClick={() => downloadExcelButtonClick()}>
       エクセルダウンロード
     </button>
