@@ -1,5 +1,7 @@
+/** @jsxImportSource @emotion/react */
 import React from 'react';
 import ExcelJS from 'exceljs';
+import { css } from '@emotion/react';
 
 type DownloadExcelProps = {
   data: Array<object>;
@@ -30,12 +32,25 @@ const downloadExcel = async (stockTable: Array<object>) => {
   link.remove();
 };
 
+const styles = css({
+  minWidth: '80px',
+  padding: '8px 16px',
+  fontSize: '16px',
+  '&:hover': {
+    background: '#f00',
+  },
+});
+
 const DownloadExcelButton: React.FC<DownloadExcelProps> = ({ data }) => {
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   const downloadExcelButtonClick: () => void = () => downloadExcel(data);
 
   return (
-    <button type="button" onClick={() => downloadExcelButtonClick()}>
+    <button
+      type="button"
+      css={styles}
+      onClick={() => downloadExcelButtonClick()}
+    >
       エクセルダウンロード
     </button>
   );
