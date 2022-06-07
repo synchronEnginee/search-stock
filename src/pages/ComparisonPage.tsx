@@ -6,8 +6,27 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import {
   ComparisonStock,
   ComparisonStockProps,
-} from '../components/ComparisonStock';
+} from 'components/ComparisonStock';
+import ComparisonChart from 'components/ComparisonChart';
 
+// チャートに渡す株データ
+const stockInfo = [
+  {
+    per: 15.0,
+    pbr: 10.0,
+    dividendYield: 2.0,
+    dividendPayoutRatio: 40.0,
+  },
+  {
+    per: 30.0,
+    pbr: 15.0,
+    dividendYield: 0.5,
+    dividendPayoutRatio: 5.0,
+  },
+];
+
+// TODO:比較チャートを表示するページへ変更
+// 機能的にrechart.js予定
 const styles = css({
   width: '60%',
   height: '100%',
@@ -38,6 +57,7 @@ interface IErrorResponse {
 // サーバからの応答の形式を渡す
 // TODO: useSWRへ変更し、ページネーション実装
 const ComparisonPage = () => {
+  const [isList, setIsList] = useState(false);
   const [stocks, setStocks] = useState<ComparisonStockProps[]>([]);
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -65,22 +85,26 @@ const ComparisonPage = () => {
       <div>
         <Link to="/">トップへ</Link>
       </div>
-      <table css={styles}>
-        <tr>
-          <th>銘柄名</th>
-          <th>銘柄コード</th>
-          <th>株価</th>
-          <th>PER</th>
-        </tr>
-        {stocks.map((stock) => (
-          <ComparisonStock
-            name={stock.name}
-            code={stock.code}
-            price={stock.price}
-            per={stock.per}
-          />
-        ))}
-      </table>
+      {isList ? (
+        <table css={styles}>
+          <tr>
+            <th>銘柄名</th>
+            <th>銘柄コード</th>
+            <th>株価</th>
+            <th>PER</th>
+          </tr>
+          {stocks.map((stock) => (
+            <ComparisonStock
+              name={stock.name}
+              code={stock.code}
+              price={stock.price}
+              per={stock.per}
+            />
+          ))}
+        </table>
+      ) : (
+        <ComparisonChart />
+      )}
     </div>
   );
 };
