@@ -18,21 +18,40 @@ const ComparisonChart = () => {
     datasets: [
       {
         label: 'サムティ',
-        data: [9.32, 4.41],
-        // borderColor: 'rgba(255, 0, 0, 1)',
-        // backgroundColor: 'rgba(255, 0, 0, 0.5)',
-        // pointRadius: 8,
+        data: [{ x: 9.32, y: 4.41 }],
+        borderColor: 'rgba(255, 0, 0, 1)',
+        backgroundColor: 'rgba(255, 0, 0, 0.5)',
+        pointRadius: 8,
       },
       {
         label: 'トーセイ',
-        data: [7.01, 3.97],
-        // borderColor: 'rgba(0, 255, 0, 1)',
-        // backgroundColor: 'rgba(0, 255, 0, 0.5)',
-        // pointRadius: 8,
+        data: [{ x: 7.01, y: 3.97 }],
+        borderColor: 'rgba(0, 255, 0, 1)',
+        backgroundColor: 'rgba(0, 255, 0, 0.5)',
+        pointRadius: 8,
       },
     ],
   };
-  return <Scatter width={730} height={250} data={data} />;
+  const options = {
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: '配当利回り',
+        },
+      },
+      x: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'PER(予想)',
+        },
+      },
+    },
+  };
+
+  return <Scatter width={730} height={250} data={data} options={options} />;
 };
 
 export default ComparisonChart;
