@@ -9,19 +9,22 @@ import {
 } from 'components/ComparisonStock';
 import ComparisonChart from 'components/ComparisonChart';
 
-// チャートに渡す株データ
-const stockInfo = [
+// チャートに渡す株データ(後でバックエンドから取得に書き換え)
+const stockDataForChart = [
   {
-    per: 15.0,
-    pbr: 10.0,
-    dividendYield: 2.0,
-    dividendPayoutRatio: 40.0,
+    name: 'サムティ',
+    per: 7.3,
+    dividendYield: 4.5,
   },
   {
-    per: 30.0,
-    pbr: 15.0,
-    dividendYield: 0.5,
-    dividendPayoutRatio: 5.0,
+    name: 'オリックス',
+    per: 10.5,
+    dividendYield: 3.8,
+  },
+  {
+    name: '任天堂',
+    per: 17.5,
+    dividendYield: 0.3,
   },
 ];
 
@@ -103,7 +106,7 @@ const ComparisonPage = () => {
           ))}
         </table>
       ) : (
-        <ComparisonChart />
+        <ComparisonChart stockDatas={stockDataForChart} />
       )}
     </div>
   );

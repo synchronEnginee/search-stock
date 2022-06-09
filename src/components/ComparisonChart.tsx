@@ -13,24 +13,39 @@ import { Scatter } from 'react-chartjs-2';
 
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
-const ComparisonChart = () => {
+const randamColor = () => {
+  const r = Math.floor(Math.random() * 255);
+  const g = Math.floor(Math.random() * 255);
+  const b = Math.floor(Math.random() * 255);
+  return `rgb(${r},${g},${b})`;
+};
+
+type ComparisonChartData = {
+  name: string;
+  per: number;
+  dividendYield: number;
+}[];
+
+export type ComparisonChartProps = {
+  stockDatas: ComparisonChartData;
+};
+
+// グラフ用の複数データ生成
+const dataForChart = (stockDatas: ComparisonChartData) =>
+  stockDatas.map((stockData) => {
+    const color = randamColor();
+    return {
+      label: stockData.name,
+      data: [{ x: stockData.per, y: stockData.dividendYield }],
+      borderColor: color,
+      backgroundColor: color,
+      pointRadius: 16,
+    };
+  });
+
+const ComparisonChart = ({ stockDatas }: ComparisonChartProps) => {
   const data = {
-    datasets: [
-      {
-        label: 'サムティ',
-        data: [{ x: 9.32, y: 4.41 }],
-        borderColor: 'rgba(255, 0, 0, 1)',
-        backgroundColor: 'rgba(255, 0, 0, 0.5)',
-        pointRadius: 8,
-      },
-      {
-        label: 'トーセイ',
-        data: [{ x: 7.01, y: 3.97 }],
-        borderColor: 'rgba(0, 255, 0, 1)',
-        backgroundColor: 'rgba(0, 255, 0, 0.5)',
-        pointRadius: 8,
-      },
-    ],
+    datasets: dataForChart(stockDatas),
   };
   const options = {
     scales: {
