@@ -27,7 +27,8 @@ type ComparisonChartData = {
 }[];
 
 export type ComparisonChartProps = {
-  stockDatas: ComparisonChartData;
+  stockDatas: { pbr: number; dividendPayoutRatio: number }[] &
+    ComparisonChartData;
 };
 
 // グラフ用の複数データ生成

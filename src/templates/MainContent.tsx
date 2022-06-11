@@ -1,10 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
 import { css } from '@emotion/react';
+import { EmotionJSX } from '@emotion/react/types/jsx-namespace';
 
 // marginLeftのwidthの数値は後で外だし
 interface MainContentProps {
-  children: React.ReactNode;
+  children: React.ReactNode | EmotionJSX.Element;
 }
 
 const Header: React.FC<MainContentProps> = ({ children }) => {
