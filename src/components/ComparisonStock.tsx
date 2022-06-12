@@ -60,13 +60,13 @@ export const ComparisonStock: React.FC<ComparisonStockProps> = (props) => {
     },
   });
   return (
-    <div css={styles}>
-      <p>コード：{code},</p>
-      <p>銘柄名：{stockInfo.name},</p>
-      <p>PER:{stockInfo.per},</p>
-      <p>PBR:{stockInfo.pbr},</p>
-      <p>利回り：{stockInfo.dividendYield},</p>
-      <p>配当性向：{stockInfo.dividendPayoutRatio}</p>
-    </div>
+    <tr css={styles}>
+      <td>{code}</td>
+      <td>{stockInfo.name}</td>
+      <td>{stockInfo.per}</td>
+      <td>{stockInfo.pbr}</td>
+      <td>{stockInfo.dividendYield}</td>
+      <td>{stockInfo.dividendPayoutRatio}</td>
+    </tr>
   );
 };

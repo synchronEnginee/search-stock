@@ -56,7 +56,7 @@ const StockContext = createContext({});
 
 // ComparisonPageでuseContextとuseReducer、ComparisonStockへdispatch渡してuseEffect内でper取得→dispatch
 // ComparisonPageでコードのみの配列をstate管理、perなどの情報をコードのstateをキーとしたオブジェクト配列でreducer経由でコピーで保持
-const ComparisonPage: React.FC = () => {
+const ComparisonPage = () => {
   const [isList, setIsList] = useState(true);
   // 銘柄コードリスト
   const [codeList, setCodeList] = useState<Set<number>>(
@@ -65,15 +65,28 @@ const ComparisonPage: React.FC = () => {
   const [stocks, setStocks] = useState<ComparisonStockProps[]>([]);
   return (
     <>
-      銘柄比較
-      <div>
-        <Link to="/">トップへ</Link>
-      </div>
+      <Link to="/">トップへ</Link>
       {isList ? (
-        codeList.forEach((code) => <ComparisonStock code={code} />)
+        <table css={styles}>
+          <tr>
+            <th>銘柄コード</th>
+            <th>銘柄名</th>
+            <th>PER</th>
+            <th>PBR</th>
+            <th>利回り</th>
+            <th>配当性向</th>
+          </tr>
+          {Array.from(codeList).map((code) => {
+            console.log(code);
+            return <ComparisonStock code={code} />;
+          })}
+        </table>
       ) : (
-        <ComparisonChart stockDatas={stockDataForChart} />
+        !isList && <ComparisonChart stockDatas={stockDataForChart} />
       )}
+      <button type="button" onClick={() => setIsList(!isList)}>
+        表示切替
+      </button>
     </>
   );
 };
