@@ -2,8 +2,7 @@
 import React, { useState, createContext, useReducer } from 'react';
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
-import {
-  ComparisonStock,
+import ComparisonStock, {
   ComparisonStockProps,
 } from 'components/ComparisonStock';
 import ComparisonChart from 'components/ComparisonChart';
@@ -62,6 +61,17 @@ const ComparisonPage = () => {
   const [codeList, setCodeList] = useState<Set<number>>(
     new Set([8316, 8306, 8473]),
   );
+  const inputRef = React.createRef<HTMLInputElement>();
+  const addCodeList = () => {
+    if (inputRef?.current) return;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    setCodeList(() => codeList.add(parseInt(inputRef.current!.value, 10)));
+  };
+  const handleSubmit = (event: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+    event.preventDefault();
+    addCodeList();
+  };
   const [stocks, setStocks] = useState<ComparisonStockProps[]>([]);
   return (
     <>
@@ -84,6 +94,12 @@ const ComparisonPage = () => {
       ) : (
         !isList && <ComparisonChart stockDatas={stockDataForChart} />
       )}
+      <div>
+        <input ref={inputRef} type="number" name="name" />
+        <button type="button" onClick={(e) => handleSubmit(e)}>
+          株追加
+        </button>
+      </div>
       <button type="button" onClick={() => setIsList(!isList)}>
         表示切替
       </button>
