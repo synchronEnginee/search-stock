@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState, createContext, useReducer } from 'react';
+import React, { useState, createContext, useReducer, useRef } from 'react';
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import ComparisonStock, {
@@ -61,15 +61,20 @@ const ComparisonPage = () => {
   const [codeList, setCodeList] = useState<Set<number>>(
     new Set([8316, 8306, 8473]),
   );
-  const inputRef = React.createRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement>(null);
   const addCodeList = () => {
-    if (inputRef?.current) return;
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    setCodeList(() => codeList.add(parseInt(inputRef.current!.value, 10)));
+    if (!inputRef?.current) return;
+    setCodeList((prevCodeList) => {
+      console.log(inputRef.current);
+      return new Set([
+        ...Array.from(prevCodeList),
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        parseInt(inputRef.current!.value, 10),
+      ]);
+    });
   };
-  const handleSubmit = (event: any) => {
+  const handleSubmit = () => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-    event.preventDefault();
     addCodeList();
   };
   const [stocks, setStocks] = useState<ComparisonStockProps[]>([]);
@@ -95,8 +100,14 @@ const ComparisonPage = () => {
         !isList && <ComparisonChart stockDatas={stockDataForChart} />
       )}
       <div>
-        <input ref={inputRef} type="number" name="name" />
-        <button type="button" onClick={(e) => handleSubmit(e)}>
+        <input ref={inputRef} type="number" />
+        <button
+          type="button"
+          onClick={() => {
+            console.log(inputRef.current!.value);
+            addCodeList();
+          }}
+        >
           株追加
         </button>
       </div>
