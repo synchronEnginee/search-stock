@@ -1,7 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { css } from '@emotion/react';
+import {
+  StocksInfoContext,
+  StocksInfoForChartStore,
+} from 'pages/ComparisonPage';
 
 const stockUrl = 'http://127.0.0.1:5000/compare/';
 
@@ -39,7 +43,9 @@ const ComparisonStock: React.FC<ComparisonStockProps> = React.memo(
       dividendYield: 0,
       dividendPayoutRatio: 0,
     });
-    console.log(code);
+    // チャート比較用に詳細情報を保管
+    const stocksInfoStore =
+      useContext<StocksInfoForChartStore>(StocksInfoContext);
     useEffect(() => {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       (async () => {
@@ -52,6 +58,7 @@ const ComparisonStock: React.FC<ComparisonStockProps> = React.memo(
           }
           console.log(res.data);
           setStockInfo(res.data);
+          stocksInfoStore[code] = res.data;
         } catch (error) {
           if (error instanceof AxiosError) {
             console.log(error.status);
