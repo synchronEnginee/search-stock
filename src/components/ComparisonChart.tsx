@@ -10,6 +10,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Scatter } from 'react-chartjs-2';
+import { StocksInfoForChartStore } from 'pages/ComparisonPage';
 
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
@@ -20,19 +21,18 @@ const randamColor = () => {
   return `rgb(${r},${g},${b})`;
 };
 
-type ComparisonChartData = {
+type ScatterChartData = {
   name: string;
   per: number;
   dividendYield: number;
 }[];
 
 export type ComparisonChartProps = {
-  stockDatas: { pbr: number; dividendPayoutRatio: number }[] &
-    ComparisonChartData;
+  stockDatas: StocksInfoForChartStore;
 };
 
 // グラフ用の複数データ生成
-const dataForChart = (stockDatas: ComparisonChartData) =>
+const dataForChart = (stockDatas: ScatterChartData) =>
   stockDatas.map((stockData) => {
     const color = randamColor();
     return {
@@ -45,8 +45,11 @@ const dataForChart = (stockDatas: ComparisonChartData) =>
   });
 
 const ComparisonChart = ({ stockDatas }: ComparisonChartProps) => {
+  const scatterDatas = Object.values(stockDatas).map(
+    ({ name, per, dividendYield }) => ({ name, per, dividendYield }),
+  );
   const data = {
-    datasets: dataForChart(stockDatas),
+    datasets: dataForChart(scatterDatas),
   };
   const options = {
     scales: {

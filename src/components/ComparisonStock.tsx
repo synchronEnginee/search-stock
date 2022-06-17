@@ -28,6 +28,7 @@ export type ComparisonStockProps = {
 };
 
 // 株の数が増えるとレンダリングコストが増えるのでメモ化
+// 2回レンダリングされてそう
 /**
  * 株比較のための1行データ
  * @param props
@@ -56,6 +57,7 @@ const ComparisonStock: React.FC<ComparisonStockProps> = React.memo(
           if (res.status !== 200 || !('data' in res)) {
             throw new AxiosError('statusが200じゃない');
           }
+          console.log('ComparisonStockのuseEffect');
           console.log(res.data);
           setStockInfo(res.data);
           stocksInfoStore[code] = res.data;
@@ -66,7 +68,8 @@ const ComparisonStock: React.FC<ComparisonStockProps> = React.memo(
           }
         }
       })();
-    }, [code]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     const styles = css({
       p: {
         fontSize: 26,

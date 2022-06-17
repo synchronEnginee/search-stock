@@ -9,29 +9,29 @@ import ComparisonStock, {
 import ComparisonChart from 'components/ComparisonChart';
 
 // チャートに渡す株データ(後でバックエンドから取得に書き換え)
-const stockDataForChart = [
-  {
-    name: 'サムティ',
-    per: 7.3,
-    pbr: 10.0,
-    dividendYield: 4.5,
-    dividendPayoutRatio: 30.0,
-  },
-  {
-    name: 'オリックス',
-    per: 10.5,
-    pbr: 10.0,
-    dividendYield: 3.8,
-    dividendPayoutRatio: 30.0,
-  },
-  {
-    name: '任天堂',
-    per: 17.5,
-    pbr: 10.0,
-    dividendYield: 0.3,
-    dividendPayoutRatio: 30.0,
-  },
-];
+// const stockDataForChart = [
+//   {
+//     name: 'サムティ',
+//     per: 7.3,
+//     pbr: 10.0,
+//     dividendYield: 4.5,
+//     dividendPayoutRatio: 30.0,
+//   },
+//   {
+//     name: 'オリックス',
+//     per: 10.5,
+//     pbr: 10.0,
+//     dividendYield: 3.8,
+//     dividendPayoutRatio: 30.0,
+//   },
+//   {
+//     name: '任天堂',
+//     per: 17.5,
+//     pbr: 10.0,
+//     dividendYield: 0.3,
+//     dividendPayoutRatio: 30.0,
+//   },
+// ];
 
 // チャートコンポーネントに渡す用の値管理
 // キーのcodeは銘柄コード
@@ -84,6 +84,7 @@ const ComparisonPage = () => {
         ]),
     );
   };
+  console.log('ComparisonPageのレンダリング');
   return (
     <>
       <Link to="/">トップへ</Link>
@@ -103,7 +104,13 @@ const ComparisonPage = () => {
             ))}
           </table>
         ) : (
-          !isList && <ComparisonChart stockDatas={stockDataForChart} />
+          !isList && (
+            <StocksInfoContext.Consumer>
+              {(stockDatas: StocksInfoForChartStore) => (
+                <ComparisonChart stockDatas={stockDatas} />
+              )}
+            </StocksInfoContext.Consumer>
+          )
         )}
       </StocksInfoContext.Provider>
       <div>
