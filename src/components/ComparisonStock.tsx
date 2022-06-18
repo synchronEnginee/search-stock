@@ -28,7 +28,6 @@ export type ComparisonStockProps = {
 };
 
 // 株の数が増えるとレンダリングコストが増えるのでメモ化
-// 2回レンダリングされてそう
 /**
  * 株比較のための1行データ
  * @param props
@@ -68,8 +67,7 @@ const ComparisonStock: React.FC<ComparisonStockProps> = React.memo(
           }
         }
       })();
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [code, stocksInfoStore]);
     const styles = css({
       p: {
         fontSize: 26,
