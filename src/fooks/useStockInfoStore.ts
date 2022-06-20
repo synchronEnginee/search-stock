@@ -1,5 +1,7 @@
 import { useCallback, useRef } from 'react';
 
+// TODO:stockInfoStoreとStockInfoStoreを操作する関数を受け取るcontext.provider2層を作成する{children}を受け取る
+
 // ComparisonStockInfoの部分をT、key:stringのみ定義？
 export type StocksInfoStore<T extends object> = {
   [key: string]: T;
@@ -13,15 +15,16 @@ export type StocksInfoStore<T extends object> = {
  * addStockInfoStore: (code: string, stockInfo: T) => void
  */
 function useStockInfoStore<T extends object>() {
-  const stockInfoStore = useRef<StocksInfoStore<T>>().current;
-  const addStockInfoStore = useCallback((code: string, stockInfo: T) => {
-    if (stockInfoStore?.current) {
-      stockInfoStore[code] = stockInfo;
-    }
-    // useRefのため依存へ渡さない
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  return { stockInfoStore, addStockInfoStore };
+  const stockInfoStore = useRef<StocksInfoStore<T>>({}).current;
+  const addStockInfoStore = useCallback(
+    (code: string, stockInfo: T) => {
+      if (stockInfoStore?.current) {
+        stockInfoStore[code] = stockInfo;
+      }
+    },
+    [stockInfoStore],
+  );
+  return [stockInfoStore, addStockInfoStore] as const;
 }
 
 export default useStockInfoStore;

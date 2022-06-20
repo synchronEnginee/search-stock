@@ -7,31 +7,7 @@ import ComparisonStock, {
   ComparisonStockInfo,
 } from 'components/ComparisonStock';
 import ComparisonChart from 'components/ComparisonChart';
-
-// チャートに渡す株データ(後でバックエンドから取得に書き換え)
-// const stockDataForChart = [
-//   {
-//     name: 'サムティ',
-//     per: 7.3,
-//     pbr: 10.0,
-//     dividendYield: 4.5,
-//     dividendPayoutRatio: 30.0,
-//   },
-//   {
-//     name: 'オリックス',
-//     per: 10.5,
-//     pbr: 10.0,
-//     dividendYield: 3.8,
-//     dividendPayoutRatio: 30.0,
-//   },
-//   {
-//     name: '任天堂',
-//     per: 17.5,
-//     pbr: 10.0,
-//     dividendYield: 0.3,
-//     dividendPayoutRatio: 30.0,
-//   },
-// ];
+import useStockInfoStore from 'fooks/useStockInfoStore';
 
 // チャートコンポーネントに渡す用の値管理
 // キーのcodeは銘柄コード
@@ -71,7 +47,8 @@ const ComparisonPage = () => {
   // 銘柄コードinput
   const inputRef = useRef<HTMLInputElement>(null);
   // チャートコンポーネントに渡す用の銘柄の詳細情報保管
-  const stocksInfoForChart = useRef<StocksInfoForChartStore>({}).current;
+  const [stockInfoStore, addStockInfoStore] =
+    useStockInfoStore<ComparisonStockInfo>();
   // 銘柄コードリスト追加
   const addCodeList = () => {
     if (!inputRef?.current) return;
@@ -88,7 +65,7 @@ const ComparisonPage = () => {
   return (
     <>
       <Link to="/">トップへ</Link>
-      <StocksInfoContext.Provider value={stocksInfoForChart}>
+      <StocksInfoContext.Provider value={stockInfoStore}>
         {isList ? (
           <table css={styles}>
             <tr>
