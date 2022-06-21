@@ -3,11 +3,10 @@ import React, { useState, createContext, useReducer, useRef } from 'react';
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import ComparisonStock, {
-  ComparisonStockProps,
   ComparisonStockInfo,
 } from 'components/ComparisonStock';
 import ComparisonChart from 'components/ComparisonChart';
-import useStockInfoStore from 'fooks/useStockInfoStore';
+import useStockInfoStore, { StocksInfoStore } from 'fooks/useStockInfoStore';
 
 // チャートコンポーネントに渡す用の値管理
 // キーのcodeは銘柄コード
@@ -36,7 +35,6 @@ const styles = css({
 // compareStockInfo
 export const StocksInfoContext = createContext({});
 
-// ComparisonPageでコードのみの配列をstate管理、ComparisonStockのuseEffectでperなどの情報を取得し、コードのstateをキーとしたuseRefで親へ戻す
 const ComparisonPage = () => {
   // リスト表示・グラフ切替
   const [isList, setIsList] = useState(true);
@@ -50,15 +48,11 @@ const ComparisonPage = () => {
   const [stockInfoStore, addStockInfoStore] =
     useStockInfoStore<ComparisonStockInfo>();
   // 銘柄コードリスト追加
-  const addCodeList = () => {
-    if (!inputRef?.current) return;
+  const addCodeList = (input: typeof inputRef.current) => {
+    if (input === null) return;
     setCodeList(
       (prevCodeList) =>
-        new Set([
-          ...Array.from(prevCodeList),
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          parseInt(inputRef.current!.value, 10),
-        ]),
+        new Set([...Array.from(prevCodeList), parseInt(input.value, 10)]),
     );
   };
   console.log('ComparisonPageのレンダリング');
@@ -83,7 +77,7 @@ const ComparisonPage = () => {
         ) : (
           !isList && (
             <StocksInfoContext.Consumer>
-              {(stockDatas: StocksInfoForChartStore) => (
+              {(stockDatas: StocksInfoStore<ComparisonStockInfo>) => (
                 <ComparisonChart stockDatas={stockDatas} />
               )}
             </StocksInfoContext.Consumer>
@@ -95,7 +89,7 @@ const ComparisonPage = () => {
         <button
           type="button"
           onClick={() => {
-            addCodeList();
+            addCodeList(inputRef.current);
           }}
         >
           株追加
