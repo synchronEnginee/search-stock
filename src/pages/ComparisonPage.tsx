@@ -6,7 +6,7 @@ import ComparisonStock, {
   ComparisonStockInfo,
 } from 'components/ComparisonStock';
 import ComparisonChart from 'components/ComparisonChart';
-import useStockInfoStore, { StocksInfoStore } from 'fooks/useStockInfoStore';
+import useStockInfoStore, { StockInfoStore } from 'fooks/useStockInfoStore';
 
 // チャートコンポーネントに渡す用の値管理
 // キーのcodeは銘柄コード
@@ -77,7 +77,7 @@ const ComparisonPage = () => {
         ) : (
           !isList && (
             <StocksInfoContext.Consumer>
-              {(stockDatas: StocksInfoStore<ComparisonStockInfo>) => (
+              {(stockDatas: StockInfoStore<ComparisonStockInfo>) => (
                 <ComparisonChart stockDatas={stockDatas} />
               )}
             </StocksInfoContext.Consumer>
