@@ -1,10 +1,15 @@
 import { useCallback, useRef } from 'react';
 
-// TODO:stockInfoStoreとStockInfoStoreを操作する関数を受け取るcontext.provider2層を作成する{children}を受け取る
-
-// ComparisonStockInfoの部分をT、key:stringのみ定義？
+// useRefをstoreで扱う対象の型. 株情報のプロパティは自由
 export type StockInfoStore<T extends object> = {
   [key: string]: T;
+};
+
+// storeの操作関数のUnion型
+export type OperateStockInfoStore<T extends object> = {
+  [key: string]:
+    | ((code: string, stockInfo: T) => void)
+    | ((code: string) => void);
 };
 
 /**
@@ -19,9 +24,8 @@ const useStockInfoStore = <T extends object>() => {
   const stockInfoStore = useRef<StockInfoStore<T>>({}).current;
   const addStockInfoStore = useCallback(
     (code: string, stockInfo: T) => {
-      if (stockInfoStore?.current) {
-        stockInfoStore[code] = stockInfo;
-      }
+      console.log('addStockInfoStore実行');
+      stockInfoStore[code] = stockInfo;
     },
     [stockInfoStore],
   );

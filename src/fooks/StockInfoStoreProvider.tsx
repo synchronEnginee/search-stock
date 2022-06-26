@@ -1,14 +1,16 @@
 import React, { createContext, ReactNode } from 'react';
-import { StockInfoStore } from 'fooks/useStockInfoStore';
+import { StockInfoStore, OperateStockInfoStore } from 'fooks/useStockInfoStore';
 
-const StockInfoContext = createContext({});
+// storeのプロバイダー
+export const StockInfoContext = createContext({});
 
-const OperateStockInfoContext = createContext({});
-// Propsの型定義を行う
+// storeを操作するプロバイダー
+export const OperateStockInfoContext = createContext({});
+// Propsの型定義
 type StockInfoStoreProviderProps<T extends object> = {
   children: ReactNode;
   store: StockInfoStore<T>;
-  operateStore: T;
+  operateStore: OperateStockInfoStore<T>;
 };
 
 const StockInfoStoreProvider = <T extends object>(

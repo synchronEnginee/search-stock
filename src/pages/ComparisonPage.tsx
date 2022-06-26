@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState, createContext, useReducer, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 import ComparisonStock, {
@@ -7,12 +7,13 @@ import ComparisonStock, {
 } from 'components/ComparisonStock';
 import ComparisonChart from 'components/ComparisonChart';
 import useStockInfoStore, { StockInfoStore } from 'fooks/useStockInfoStore';
+import StockInfoStoreProvider, {
+  StockInfoContext,
+} from 'fooks/StockInfoStoreProvider';
 
 // チャートコンポーネントに渡す用の値管理
 // キーのcodeは銘柄コード
-export type StocksInfoForChartStore = {
-  [key: string]: ComparisonStockInfo;
-};
+export type StocksInfoForChartStore = StockInfoStore<ComparisonStockInfo>;
 
 // TODO:比較チャートを表示するページへ変更
 // 機能的にrechart.js予定
@@ -22,8 +23,9 @@ const styles = css({
   margin: '0 auto',
   fontSize: '30px',
   border: '1px solid black',
-  'tr:nth-child(odd)': {
-    'background-color': 'rgb(255, 255, 128)',
+  // nth-childだとemotionのwariningが出る
+  'tr:nth-of-type(odd)': {
+    backgroundColor: 'rgb(255, 255, 128)',
   },
   'tr th': {
     fontWeight: 'bold',
@@ -33,7 +35,7 @@ const styles = css({
 });
 
 // compareStockInfo
-export const StocksInfoContext = createContext({});
+// export const StocksInfoContext = createContext({});
 
 const ComparisonPage = () => {
   // リスト表示・グラフ切替
@@ -45,7 +47,7 @@ const ComparisonPage = () => {
   // 銘柄コードinput
   const inputRef = useRef<HTMLInputElement>(null);
   // チャートコンポーネントに渡す用の銘柄の詳細情報保管
-  const [stockInfoStore, addStockInfoStore] =
+  const [stockInfoStore, operateStockInfoStore] =
     useStockInfoStore<ComparisonStockInfo>();
   // 銘柄コードリスト追加
   const addCodeList = (input: typeof inputRef.current) => {
@@ -59,42 +61,49 @@ const ComparisonPage = () => {
   return (
     <>
       <Link to="/">トップへ</Link>
-      <StocksInfoContext.Provider value={stockInfoStore}>
+      <StockInfoStoreProvider
+        store={stockInfoStore}
+        operateStore={operateStockInfoStore}
+      >
+        {/* リストとグラフ表示切替 */}
         {isList ? (
-          <table css={styles}>
-            <tr>
-              <th>銘柄コード</th>
-              <th>銘柄名</th>
-              <th>PER</th>
-              <th>PBR</th>
-              <th>利回り</th>
-              <th>配当性向</th>
-            </tr>
-            {Array.from(codeList).map((code) => (
-              <ComparisonStock code={code} />
-            ))}
-          </table>
+          <>
+            <table css={styles}>
+              <tbody>
+                <tr>
+                  <th>銘柄コード</th>
+                  <th>銘柄名</th>
+                  <th>PER</th>
+                  <th>PBR</th>
+                  <th>利回り</th>
+                  <th>配当性向</th>
+                </tr>
+                {/* warning回避のためにkey付与 */}
+                {Array.from(codeList).map((code) => (
+                  <ComparisonStock code={code} key={code} />
+                ))}
+              </tbody>
+            </table>
+            <div>
+              <input ref={inputRef} type="number" />
+              <button
+                type="button"
+                onClick={() => {
+                  addCodeList(inputRef.current);
+                }}
+              >
+                株追加
+              </button>
+            </div>
+          </>
         ) : (
-          !isList && (
-            <StocksInfoContext.Consumer>
-              {(stockDatas: StockInfoStore<ComparisonStockInfo>) => (
-                <ComparisonChart stockDatas={stockDatas} />
-              )}
-            </StocksInfoContext.Consumer>
-          )
+          <StockInfoContext.Consumer>
+            {(stockDatas: StocksInfoForChartStore) => (
+              <ComparisonChart stockDatas={stockDatas} />
+            )}
+          </StockInfoContext.Consumer>
         )}
-      </StocksInfoContext.Provider>
-      <div>
-        <input ref={inputRef} type="number" />
-        <button
-          type="button"
-          onClick={() => {
-            addCodeList(inputRef.current);
-          }}
-        >
-          株追加
-        </button>
-      </div>
+      </StockInfoStoreProvider>
       <button type="button" onClick={() => setIsList(!isList)}>
         表示切替
       </button>

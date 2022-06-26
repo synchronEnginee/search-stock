@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { css } from '@emotion/react';
+import { StocksInfoForChartStore } from 'pages/ComparisonPage';
+import { OperateStockInfoStore } from 'fooks/useStockInfoStore';
 import {
-  StocksInfoContext,
-  StocksInfoForChartStore,
-} from 'pages/ComparisonPage';
+  StockInfoContext,
+  OperateStockInfoContext,
+} from 'fooks/StockInfoStoreProvider';
 
 const stockUrl = 'http://127.0.0.1:5000/compare/';
 
@@ -44,8 +46,9 @@ const ComparisonStock: React.FC<ComparisonStockProps> = React.memo(
       dividendPayoutRatio: 0,
     });
     // チャート比較用に詳細情報を保管
-    const stocksInfoStore =
-      useContext<StocksInfoForChartStore>(StocksInfoContext);
+    const operateStockInfoStore = useContext<
+      OperateStockInfoStore<ComparisonStockInfo>
+    >(OperateStockInfoContext);
     useEffect(() => {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       (async () => {
@@ -59,7 +62,7 @@ const ComparisonStock: React.FC<ComparisonStockProps> = React.memo(
           console.log('ComparisonStockのuseEffect');
           console.log(res.data);
           setStockInfo(res.data);
-          stocksInfoStore[code] = res.data;
+          operateStockInfoStore.addStockInfoStore(code.toString(), res.data);
         } catch (error) {
           if (error instanceof AxiosError) {
             console.log(error.status);
@@ -67,7 +70,7 @@ const ComparisonStock: React.FC<ComparisonStockProps> = React.memo(
           }
         }
       })();
-    }, [code, stocksInfoStore]);
+    }, [code, operateStockInfoStore]);
     const styles = css({
       p: {
         fontSize: 26,
