@@ -1,6 +1,5 @@
 /** @jsxImportSource @emotion/react */
 import React from 'react';
-import { css } from '@emotion/react';
 import {
   Chart as ChartJS,
   LinearScale,
@@ -14,7 +13,7 @@ import { StocksInfoForChartStore } from 'pages/ComparisonPage';
 
 ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
-const randamColor = () => {
+export const randomColor = () => {
   const r = Math.floor(Math.random() * 255);
   const g = Math.floor(Math.random() * 255);
   const b = Math.floor(Math.random() * 255);
@@ -34,7 +33,7 @@ export type ComparisonChartProps = {
 // グラフ用の複数データ生成
 const dataForChart = (stockDatas: ScatterChartData) =>
   stockDatas.map((stockData) => {
-    const color = randamColor();
+    const color = randomColor();
     return {
       label: stockData.name,
       data: [{ x: stockData.per, y: stockData.dividendYield }],
