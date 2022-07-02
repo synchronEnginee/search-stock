@@ -17,6 +17,7 @@ interface StockGetResponse extends AxiosResponse {
 }
 
 // TODO: numberを4桁のリテラル型にする
+// typesファイルに切り出す
 export type ComparisonStockInfo = {
   name: string;
   per: number;

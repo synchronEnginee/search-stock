@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`スナップショットテスト 1`] = `
+Array [
+  <style
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": ".css-4xrqo5 p{font-size:26px;}",
+      }
+    }
+    data-emotion="css 4xrqo5"
+  />,
+  <tr
+    className="css-4xrqo5"
+  >
+    <td>
+      9999
+    </td>
+    <td>
+      ---
+    </td>
+    <td>
+      0
+    </td>
+    <td>
+      0
+    </td>
+    <td>
+      0
+    </td>
+    <td>
+      0
+    </td>
+  </tr>,
+]
+`;
