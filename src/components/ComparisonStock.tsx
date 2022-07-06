@@ -2,12 +2,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { css } from '@emotion/react';
-import { StocksInfoForChartStore } from 'pages/ComparisonPage';
 import { OperateStockInfoStore } from 'fooks/useStockInfoStore';
-import {
-  StockInfoContext,
-  OperateStockInfoContext,
-} from 'fooks/StockInfoStoreProvider';
+import { OperateStockInfoContext } from 'fooks/StockInfoStoreProvider';
 
 const stockUrl = 'http://127.0.0.1:5000/compare/';
 

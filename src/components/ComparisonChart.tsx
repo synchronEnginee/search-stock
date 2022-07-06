@@ -31,7 +31,7 @@ export type ComparisonChartProps = {
 };
 
 // グラフ用の複数データ生成
-const dataForChart = (stockDatas: ScatterChartData) =>
+export const dataForChart = (stockDatas: ScatterChartData) =>
   stockDatas.map((stockData) => {
     const color = randomColor();
     return {
