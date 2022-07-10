@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { css } from '@emotion/react';
+import { useErrorHandler } from 'react-error-boundary';
 import { OperateStockInfoStore } from 'fooks/useStockInfoStore';
 import { OperateStockInfoContext } from 'fooks/StockInfoStoreProvider';
 
@@ -42,6 +43,8 @@ const ComparisonStock: React.FC<ComparisonStockProps> = React.memo(
       dividendYield: 0,
       dividendPayoutRatio: 0,
     });
+    // エラーハンドリング
+    const handleError = useErrorHandler();
     // チャート比較用に詳細情報を保管
     const operateStockInfoStore = useContext<
       OperateStockInfoStore<ComparisonStockInfo>
@@ -64,10 +67,11 @@ const ComparisonStock: React.FC<ComparisonStockProps> = React.memo(
           if (error instanceof AxiosError) {
             console.log(error.status);
             console.log(error.message);
+            handleError(error);
           }
         }
       })();
-    }, [code, operateStockInfoStore]);
+    }, [code, operateStockInfoStore, handleError]);
     const styles = css({
       p: {
         fontSize: 26,
