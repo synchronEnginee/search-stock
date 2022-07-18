@@ -2,24 +2,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable react/prop-types */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useState, useRef, useCallback } from 'react';
 import axios from 'axios';
+import { useStockQuery } from 'fooks/useStockQuery';
+import { ComparisonStockInfo } from './ComparisonStock';
 import suspenseResource from '../provider/suspenseResource';
 
-const stockUrl = 'http://127.0.0.1:5000/compare/';
-
-type Props = {
-  fetcher: () => Promise<any>;
+type SuspenseDisplayProps = {
+  code: number;
 };
 
-const Fetch = (props: Props) => {
-  // eslint-disable-next-line react/destructuring-assignment
-  const d = suspenseResource(props.fetcher()).read();
-  return (
-    <div>
-      <div>data:{d}</div>
-    </div>
-  );
+const SuspenseDisplay = ({ code }: SuspenseDisplayProps) => {
+  const { data } = useStockQuery(code);
+  return <div>{data?.name}</div>;
 };
 
 /**
@@ -28,25 +23,22 @@ const Fetch = (props: Props) => {
  * @returns
  */
 const FetchButton = () => {
-  const fetcher1 = async () => {
-    setTimeout(() => {}, 5000);
-    return axios.get(stockUrl);
-  };
-  const fetcher2 = async () => {
-    setTimeout(() => {}, 5000);
-    return axios.get(stockUrl);
-  };
-  const [fetch, setFetch] = useState(() => fetcher1);
+  const code = useRef(3246);
+  const [codeState, setCodeState] = useState(3246);
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-  const changeData = () => setFetch(() => fetcher2);
   return (
     <>
-      <button onClick={() => changeData()} type="button">
+      <input
+        type="number"
+        onChange={(e) => {
+          code.current = Number(e.target.value);
+        }}
+      />
+      <button onClick={() => setCodeState(code.current)} type="button">
         FetchButton
       </button>
       <Suspense fallback={<div>Loading...</div>}>
-        <Fetch fetcher={fetch} />
+        <SuspenseDisplay code={codeState} />
       </Suspense>
     </>
   );

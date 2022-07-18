@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /**
  * Suspenseを利用するためのresource.
+ * 勉強用で利用.
+ * react-query利用するので不要となった.
  * @param promise
  * @returns
  */
