@@ -6,10 +6,10 @@ import ComparisonStock, {
   ComparisonStockInfo,
 } from 'components/ComparisonStock';
 import ComparisonChart from 'components/ComparisonChart';
-import useStockInfoStore, { StockInfoStore } from 'fooks/useStockInfoStore';
+import useStockInfoStore, { StockInfoStore } from 'hooks/useStockInfoStore';
 import StockInfoStoreProvider, {
   StockInfoContext,
-} from 'fooks/StockInfoStoreProvider';
+} from 'hooks/StockInfoStoreProvider';
 
 // チャートコンポーネントに渡す用の値管理
 // キーのcodeは銘柄コード

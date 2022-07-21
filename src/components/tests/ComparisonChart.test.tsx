@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import ComparisonChart, { dataForChart } from '../ComparisonChart';
+import ComparisonChart, { dataForChart, randomColor } from '../ComparisonChart';
 
 test('dataForChart test', () => {
   expect(
@@ -15,4 +15,8 @@ test('dataForChart test', () => {
       pointRadius: 16,
     },
   ]);
+});
+
+test('randomColor test', () => {
+  expect(randomColor()).toMatch(/^rgb\([0-9]+,[0-9]+,[0-9]+\)$/);
 });

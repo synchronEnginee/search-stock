@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { Suspense, useState, useRef, useCallback } from 'react';
 import axios from 'axios';
-import { useStockQuery } from 'fooks/useStockQuery';
+import { useStockQuery } from 'hooks/useStockQuery';
 import { ComparisonStockInfo } from './ComparisonStock';
 import suspenseResource from '../provider/suspenseResource';
 

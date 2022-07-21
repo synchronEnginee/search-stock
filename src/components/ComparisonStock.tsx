@@ -3,8 +3,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { css } from '@emotion/react';
 import { useErrorHandler } from 'react-error-boundary';
-import { OperateStockInfoStore } from 'fooks/useStockInfoStore';
-import { OperateStockInfoContext } from 'fooks/StockInfoStoreProvider';
+import { OperateStockInfoStore } from 'hooks/useStockInfoStore';
+import { OperateStockInfoContext } from 'hooks/StockInfoStoreProvider';
 
 const stockUrl = 'http://127.0.0.1:5000/compare/';
 
