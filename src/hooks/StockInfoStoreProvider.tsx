@@ -1,5 +1,5 @@
 import React, { createContext, ReactNode } from 'react';
-import { StockInfoStore, OperateStockInfoStore } from 'fooks/useStockInfoStore';
+import { StockInfoStore, OperateStockInfoStore } from 'hooks/useStockInfoStore';
 
 // storeのプロバイダー
 export const StockInfoContext = createContext({});
