@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import StockForm from 'components/StockForm';
 import AppErrorBoundary from './provider/AppErrorBoundary';
 import MainContent from './templates/MainContent';
 import FallStockPage from './pages/FallStockPage';
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/" element={<FallStockPage />} />
             <Route path="/compare" element={<ComparisonPage />} />
             <Route path="/_suspense" element={<FetchButton />} />
+            <Route path="/form" element={<StockForm />} />
           </Routes>
           <Footer />
         </MainContent>
